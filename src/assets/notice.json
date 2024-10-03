@@ -1,0 +1,14 @@
+[
+  { "id": 1, "title": "test", "author": "ruoghks", "date": "2024-07-04", "views": 5 },
+  { "id": 2, "title": "팝업 공지 제목입니다.", "author": "ADMIN01", "date": "2023-10-10", "views": 38 },
+  { "id": 3, "title": "공지사항 test", "author": "ADMIN01", "date": "2023-09-26", "views": 24 },
+  { "id": 4, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 },
+  { "id": 5, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 },
+  { "id": 6, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 },
+  { "id": 7, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 },
+  { "id": 8, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 },
+  { "id": 9, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 },
+  { "id": 10, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 },
+  { "id": 11, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 },
+  { "id": 12, "title": "오늘의 공지", "author": "ADMIN01", "date": "2023-10-04", "views": 17 }
+]

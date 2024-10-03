@@ -1,19 +1,21 @@
 <template>
   <div>
     <header-section @toggle-sidebar="toggleSidebar" />
+
     <div class="layout">
-      <sidebar-section v-if="isOpen" />
+      <sidebar-section v-if="isOpen" @update-title="updateTitle" />
       <div class="main-content">
-        <main-content-section />
+        <main-content-section :title="title" />
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import HeaderSection from "@/components/layouts/HeaderSection";
-import SidebarSection from "@/components/layouts/SidebarSection";
-import MainContentSection from "@/components/layouts/MainContentSection";
+import HeaderSection from "@/pages/layouts/HeaderSection";
+import SidebarSection from "@/pages/layouts/SidebarSection";
+import MainContentSection from "@/pages/layouts/MainContentSection";
 
 export default {
   name: 'App',
@@ -25,11 +27,16 @@ export default {
   data() {
     return {
       isOpen: true, // 사이드바 상태 제어
+      title: 'TITLE'
     }
   },
   methods: {
     toggleSidebar() {
       this.isOpen = !this.isOpen;
+    },
+    updateTitle (newTitle) {
+      console.log(`updateTitle:: ${newTitle}`)
+      this.title = newTitle;
     },
   }
 }

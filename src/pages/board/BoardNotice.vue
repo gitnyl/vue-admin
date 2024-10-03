@@ -6,9 +6,10 @@
         <option v-for="option in searchOptions" :key="option">{{ option }}</option>
       </select>
       <input type="text" placeholder="검색어를 입력해주세요" class="input-field" />
-      <button class="search-button">🔍</button>
+      <button class="search-button" @click="searchNotices">🔍</button>
     </div>
 
+    <div class="total-count">전체 글 <b>{{ totalCount }}</b></div>
     <table class="data-table">
       <thead>
       <tr>
@@ -16,7 +17,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="item in items" :key="item.id">
+      <tr v-for="item in paginatedItems" :key="item.id">
         <td>{{ item.id }}</td>
         <td>{{ item.title }}</td>
         <td>{{ item.author }}</td>
@@ -27,16 +28,18 @@
     </table>
 
     <div class="pagination">
-      <span>Page: {{ page }}</span>
-      <button @click="page--" :disabled="page <= 1">Previous</button>
-      <button @click="page++">Next</button>
+      <button @click="previousPage" :disabled="page <= 1"> < </button>
+      <span class="pl-3 pr-3">{{ page }}</span>
+      <button @click="nextPage" :disabled="page >= totalPages"> > </button>
     </div>
   </div>
 </template>
 
 <script>
+import notice from "@/assets/notice.json";
+
 export default {
-  name: "MainContentSection",
+  name: "BoardNotice",
   data() {
     return {
       searchOptions: ['제목', '작성자'],
@@ -47,15 +50,43 @@ export default {
         { text: '작성일', value: 'date' },
         { text: '조회수', value: 'views' },
       ],
-      items: [
-        { id: 1, title: 'test', author: 'ruoghks', date: '2024-07-04', views: 5 },
-        { id: 2, title: '팝업 공지 제목입니다.', author: '휴머스온', date: '2023-10-10', views: 38 },
-        { id: 3, title: '공지사항 test', author: '휴머스온', date: '2023-09-26', views: 24 },
-        { id: 4, title: '오늘의 공지', author: '휴머스온', date: '2023-10-04', views: 17 },
-      ],
-      page: 1
+      items: [],
+      page: 1,
+      itemsPerPage: 5,
+      totalPages: 0,
+      totalCount: 0
+    };
+  },
+  created() {
+    this.getNoticeList();
+  },
+  watch: {
+    items: 'calculateTotalPages',
+  },
+  computed: {
+    paginatedItems() {
+      const start = (this.page - 1) * this.itemsPerPage;
+      return this.items.slice(start, start + this.itemsPerPage);
+    },
+  },
+  methods: {
+    previousPage() {
+      if (this.page > 1) this.page--;
+    },
+    nextPage() {
+      if (this.page < this.totalPages) this.page++;
+    },
+    calculateTotalPages() {
+      this.totalPages = Math.ceil(this.items.length / this.itemsPerPage);
+    },
+    getNoticeList() {
+      this.items = notice; // JSON 데이터로 초기화
+      this.totalCount = this.items.length; // 총 개수 설정
+      this.calculateTotalPages(); // 페이지 수 계산
+    },
+    searchNotices() {
     }
-  }
+  },
 }
 </script>
 
@@ -91,5 +122,8 @@ export default {
 }
 .pagination {
   margin-top: 20px;
+}
+.total-count {
+  text-align: left;
 }
 </style>

@@ -1,11 +1,13 @@
 <template>
   <div class="sidebar">
     <div class="menu" v-for="(menu, index) in menus" :key="index">
+
       <div class="menu-title" @click="menu.expanded = !menu.expanded">
         <span class="menu-icon" :class="menu.icon ?? menu.icon"></span>
         <span>{{ menu.title }}</span>
         <span class="arrow" :class="menu.expanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></span>
       </div>
+
       <div v-if="menu.expanded" class="sub-menu">
         <div
             class="sub-menu-item"
@@ -16,6 +18,7 @@
           {{ subMenu.title }}
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -32,17 +35,15 @@ export default {
           icon: 'fas fa-calendar-alt',
           expanded: true,
           subMenus: [
-            { title: '공지사항', route: '/notice' },
-            { title: 'Q&A', route: '/qna' }
+            { title: '공지사항', route: { name: 'noticeList' } },
+            { title: 'Q&A', route: { name: 'qnaList' } }
           ]
         },
         {
           title: '메시지',
           icon: 'fas fa-envelope',
           expanded: false,
-          subMenus: [
-            { title: '발송하기', route: '/send-message' }
-          ]
+          subMenus: []
         },
         {
           title: '캠페인',
@@ -54,9 +55,10 @@ export default {
     };
   },
   methods: {
-    navigateTo(subMenu) {
-      console.log(`Navigating to:: ${subMenu.route}`);
-      // this.$router.push(subMenu.route);
+    navigateTo (subMenu) {
+      console.log(`Navigating to:: ${subMenu.route.name} / pageTitle:: ${subMenu.title}`);
+      this.$emit('update-title', subMenu.title);
+      this.$router.push(subMenu.route);
     },
   },
 }
