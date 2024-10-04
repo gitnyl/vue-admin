@@ -1,24 +1,36 @@
-# untitled
+# FE 과제
 
-## Project setup
-```
-npm install
-```
+## 소개
+이 프로젝트는 JavaScript, HTML, CSS를 활용한 웹 애플리케이션을 개발하기 위한 과제입니다. Vue.js 프레임워크를 사용하여 구현하였으며, 요구사항에 따른 기능들을 추가했습니다.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 기능 요구사항
+- **레이아웃 배치**: 지정된 레이아웃에 따라 사용자 인터페이스를 구성했습니다.
+- **사이드 메뉴 기능**: 좌측 상단 메뉴 클릭 시 사이드바가 접히고 펼쳐지도록 구현했습니다.
+- **메뉴 항목**: 
+  - 게시판
+    - 공지사항
+    - Q&A
+  - 메시지
+    - 발송하기
+- **조건별 데이터 필터링**: 검색 조건과 검색어를 기반으로 테이블 데이터를 필터링하여 화면에 출력합니다.
+- **페이징 기능**: 한 화면에 5행씩 데이터를 출력합니다.
+- **테이블 구성**: 각 행은 ID, 제목, 작성자, 작성일 정보를 포함하며, 전체 글 개수를 자동으로 업데이트합니다.
+- **등록일 선택 기능**: 사용자가 날짜를 선택하여 필터링할 수 있도록 구현했습니다.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 기술 스택
+- JavaScript
+- HTML
+- CSS
+- Vue.js
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 설치 및 실행
+1. 레포지토리를 클론합니다.
+   ```bash
+   git clone [레포지토리 URL]
+2. 필요한 패키지를 설치합니다.
+   ```bash
+   npm install
+3. 개발 서버를 실행합니다.
+   ```bash
+   npm run serve
+4. 웹 브라우저에서 http://localhost:8080 로 접속하여 프로젝트를 확인합니다.
