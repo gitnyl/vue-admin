@@ -1,0 +1,25 @@
+[
+  {
+    "title": "게시판",
+    "icon": "fas fa-calendar-alt",
+    "expanded": false,
+    "subMenus": [
+      { "title": "공지사항", "route": { "name": "noticeList" } },
+      { "title": "Q&A", "route": { "name": "qnaList" } }
+    ]
+  },
+  {
+    "title": "메시지",
+    "icon": "fas fa-envelope",
+    "expanded": false,
+    "subMenus": [
+      { "title": "발송하기", "route": { "name": "sendMessage" } }
+    ]
+  },
+  {
+    "title": "캠페인",
+    "icon": "fas fa-vector-square",
+    "expanded": false,
+    "subMenus": []
+  }
+]

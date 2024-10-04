@@ -1,0 +1,23 @@
+[
+  { "id": 1, "title": "test", "author": "ADMIN01", "date": "2024-10-03", "views": 5 },
+  { "id": 2, "title": "팝업 공지 제목입니다.", "author": "ADMIN01", "date": "2024-10-02", "views": 38 },
+  { "id": 3, "title": "공지사항 test", "author": "ADMIN01", "date": "2024-09-26", "views": 224 },
+  { "id": 4, "title": "오늘의 공지1", "author": "ADMIN02", "date": "2024-09-26", "views": 17 },
+  { "id": 5, "title": "오늘의 공지2", "author": "ADMIN03", "date": "2024-09-26", "views": 101 },
+  { "id": 6, "title": "오늘의 공지3", "author": "ADMIN04", "date": "2024-09-26", "views": 13 },
+  { "id": 7, "title": "오늘의 공지4", "author": "ADMIN05", "date": "2024-09-26", "views": 236 },
+  { "id": 8, "title": "오늘의 공지5", "author": "ADMIN06", "date": "2024-09-26", "views": 56 },
+  { "id": 9, "title": "오늘의 공지6", "author": "ADMIN07", "date": "2024-07-14", "views": 34 },
+  { "id": 10, "title": "오늘의 공지7", "author": "ADMIN08", "date": "2023-07-13", "views": 426 },
+  { "id": 11, "title": "오늘의 공지8", "author": "ADMIN09", "date": "2023-07-02", "views": 26 },
+  { "id": 12, "title": "오늘의 공지9", "author": "ADMIN10", "date": "2023-06-30", "views": 465 },
+  { "id": 13, "title": "공지사항 10", "author": "ADMIN11", "date": "2023-06-15", "views": 123 },
+  { "id": 14, "title": "공지사항 11", "author": "ADMIN12", "date": "2023-06-12", "views": 456 },
+  { "id": 15, "title": "공지사항 12", "author": "ADMIN13", "date": "2023-06-10", "views": 78 },
+  { "id": 16, "title": "공지사항 13", "author": "ADMIN14", "date": "2023-06-05", "views": 12 },
+  { "id": 17, "title": "공지사항 14", "author": "ADMIN15", "date": "2023-06-02", "views": 98 },
+  { "id": 18, "title": "공지사항 15", "author": "ADMIN16", "date": "2023-05-30", "views": 134 },
+  { "id": 19, "title": "공지사항 16", "author": "ADMIN17", "date": "2023-05-28", "views": 67 },
+  { "id": 20, "title": "공지사항 17", "author": "ADMIN18", "date": "2023-05-25", "views": 189 },
+  { "id": 21, "title": "공지사항 21", "author": "ADMIN21", "date": "2023-05-01", "views": 100 }
+]
