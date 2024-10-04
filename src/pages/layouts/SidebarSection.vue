@@ -4,7 +4,7 @@
       <div class="menu-title" @click="toggleMenu(menu)">
         <span class="menu-icon" :class="menu.icon ?? menu.icon"></span>
         <span>{{ menu.title }}</span>
-        <span class="arrow" :class="menu.expanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></span>
+        <span class="arrow" :class="menu.expanded ? 'arrow-up' : 'arrow-down'"></span>
       </div>
 
       <div v-if="menu.expanded" class="sub-menu">
@@ -92,5 +92,21 @@ export default {
 
 .sub-menu-item:hover {
   background-color: #e0f7fa;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+.arrow-up {
+  border-bottom: 8px solid #a9a9a9;
+}
+
+.arrow-down {
+  border-top: 8px solid #a9a9a9;
 }
 </style>
