@@ -8,7 +8,6 @@
         <main-content-section :title="title" />
       </div>
     </div>
-
   </div>
 </template>
 
@@ -27,7 +26,7 @@ export default {
   data() {
     return {
       isOpen: true, // 사이드바 상태 제어
-      title: 'TITLE'
+      title: ''
     }
   },
   methods: {
@@ -35,7 +34,6 @@ export default {
       this.isOpen = !this.isOpen;
     },
     updateTitle (newTitle) {
-      console.log(`updateTitle:: ${newTitle}`)
       this.title = newTitle;
     },
   }
@@ -53,14 +51,6 @@ export default {
 
 .layout {
   display: flex;
-}
-
-.sidebar {
-  width: 250px; /* 사이드바 너비 */
-  background-color: #f4f4f4;
-  height: 100vh; /* 사이드바 전체 높이 */
-  overflow-y: auto;
-  padding: 10px;
 }
 
 .main-content {
