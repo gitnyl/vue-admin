@@ -1,48 +1,91 @@
 <template>
   <div class="main-content">
-    <div class="search-filter">
-      <input type="text" placeholder="등록일 기준" class="input-field" />
-      <select class="input-field">
-        <option v-for="option in searchOptions" :key="option">{{ option }}</option>
-      </select>
-      <input type="text" placeholder="검색어를 입력해주세요" class="input-field" />
-      <button class="search-button" @click="searchNotices">🔍</button>
-    </div>
 
+    <!-- 검색 -->
+    <div class="search-filter">
+      <!-- 등록일 기준 -->
+      <label for="searchDate" class="search-label">등록일 기준</label>
+      <input type="date" v-model="searchDate" id="searchDate" class="input-field" />
+
+      <!-- 검색 조건 -->
+      <label for="searchOption" class="search-label">검색 조건</label>
+      <select v-model="searchOption" id="searchOption" class="input-field search-select-box">
+        <option v-for="option in searchOptions" :key="option.type" :value="option.type">{{ option.value }}</option>
+      </select>
+
+      <!-- 검색어 -->
+      <input v-model="searchKeyword" id="searchKeyword" type="text" placeholder="검색어를 입력해주세요" class="input-field" />
+
+      <!-- 검색 버튼 -->
+      <div class="search-button mr-5" @click="searchNotices">
+        <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+      </div>
+
+      <!-- 초기화 버튼 -->
+      <div class="search-button" @click="initNotices">
+        <i class="fa-solid fa-arrow-rotate-right fa-lg"></i>
+      </div>
+    </div>
+    <!-- //검색 -->
+
+    <!-- 테이블 -->
     <div class="total-count">전체 글 <b>{{ totalCount }}</b></div>
     <table class="data-table">
       <thead>
-      <tr>
-        <th v-for="header in headers" :key="header.value">{{ header.text }}</th>
-      </tr>
+        <tr>
+          <th v-for="header in headers" :key="header.value">{{ header.text }}</th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="item in paginatedItems" :key="item.id">
-        <td>{{ item.id }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.author }}</td>
-        <td>{{ item.date }}</td>
-        <td>{{ item.views }}</td>
-      </tr>
+        <tr v-if="filteredItems.length === 0">
+          <td colspan="5" style="text-align: center;">검색결과가 없습니다</td>
+        </tr>
+        <tr v-for="item in paginatedItems" :key="item.id" v-else>
+          <td>{{ item.id }}</td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.author }}</td>
+          <td>{{ item.date }}</td>
+          <td>{{ item.views }}</td>
+        </tr>
       </tbody>
     </table>
+    <!-- //테이블 -->
 
-    <div class="pagination">
-      <button @click="previousPage" :disabled="page <= 1"> < </button>
-      <span class="pl-3 pr-3">{{ page }}</span>
-      <button @click="nextPage" :disabled="page >= totalPages"> > </button>
+    <!-- 페이징 -->
+    <div class="pagination" v-if="totalCount">
+      <button @click="goToFirstPage" :disabled="page <= 1"><i class="fa-solid fa-angles-left"></i></button>
+      <button @click="previousPage" :disabled="page <= 1"><i class="fa-solid fa-chevron-left"></i></button>
+      <button
+          v-for="pageNum in totalPagesArray"
+          :key="pageNum"
+          @click="goToPage(pageNum)"
+          :disabled="page === pageNum"
+          :class="{ active: page === pageNum }"
+      >
+        {{ pageNum }}
+      </button>
+      <button @click="nextPage" :disabled="page >= totalPages"><i class="fa-solid fa-chevron-right"></i></button>
+      <button @click="goToLastPage" :disabled="page >= totalPages"><i class="fa-solid fa-angles-right"></i></button>
     </div>
+    <!-- //페이징 -->
+
   </div>
 </template>
 
 <script>
-import notice from "@/assets/notice.json";
+import notice from "@/assets/data/notice.json";
 
 export default {
   name: "BoardNotice",
   data() {
     return {
-      searchOptions: ['제목', '작성자'],
+      searchDate: '',
+      searchOption: 1,
+      searchKeyword: '',
+      searchOptions: [
+        { type: 1, value: '제목' },
+        { type: 2, value: '작성자' }
+      ],
       headers: [
         { text: 'ID', value: 'id' },
         { text: '제목', value: 'title' },
@@ -51,23 +94,26 @@ export default {
         { text: '조회수', value: 'views' },
       ],
       items: [],
+      filteredItems: [],
       page: 1,
       itemsPerPage: 5,
       totalPages: 0,
-      totalCount: 0
+      totalCount: 0,
     };
   },
   created() {
     this.getNoticeList();
   },
   watch: {
-    items: 'calculateTotalPages',
   },
   computed: {
     paginatedItems() {
       const start = (this.page - 1) * this.itemsPerPage;
-      return this.items.slice(start, start + this.itemsPerPage);
+      return this.filteredItems.slice(start, start + this.itemsPerPage);
     },
+    totalPagesArray() {
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    }
   },
   methods: {
     previousPage() {
@@ -76,15 +122,58 @@ export default {
     nextPage() {
       if (this.page < this.totalPages) this.page++;
     },
+    goToFirstPage() {
+      this.page = 1;
+    },
+    goToLastPage() {
+      this.page = this.totalPages;
+    },
+    goToPage(pageNum) {
+      this.page = pageNum;
+    },
     calculateTotalPages() {
-      this.totalPages = Math.ceil(this.items.length / this.itemsPerPage);
+      this.totalPages = Math.ceil(this.filteredItems.length / this.itemsPerPage);
     },
     getNoticeList() {
-      this.items = notice; // JSON 데이터로 초기화
-      this.totalCount = this.items.length; // 총 개수 설정
-      this.calculateTotalPages(); // 페이지 수 계산
+      this.items = notice;
+      this.filteredItems = this.items;
+      this.totalCount = this.items.length;
+      this.calculateTotalPages();
+    },
+    initNotices () {
+      this.searchDate = '';
+      this.searchOption = 1;
+      this.searchKeyword = '';
+      this.page = 1;
+      this.getNoticeList();
     },
     searchNotices() {
+      let filteredItems = this.items;
+
+      // 날짜 필터링
+      if (this.searchDate) {
+        filteredItems = filteredItems.filter(item => item.date === this.searchDate);
+      }
+
+      // 키워드 필터링
+      if (this.searchKeyword) {
+        const keyword = this.searchKeyword.toLowerCase();
+        filteredItems = filteredItems.filter(item => {
+          if (this.searchOption === 1) {
+            // 제목으로 필터링
+            return item.title.toLowerCase().includes(keyword);
+          } else if (this.searchOption === 2) {
+            // 작성자로 필터링
+            return item.author.toLowerCase().includes(keyword);
+          }
+          return false;
+        });
+      }
+
+      this.filteredItems = filteredItems;
+      this.totalCount = filteredItems.length;
+      this.page = 1;
+      this.calculateTotalPages();
     }
   },
 }
@@ -105,6 +194,9 @@ export default {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  height: 30px;
+  font-size: 12px;
+  box-sizing: border-box;
 }
 .search-button {
   background-color: transparent;
@@ -125,5 +217,17 @@ export default {
 }
 .total-count {
   text-align: left;
+}
+.pagination button,
+.pagination span {
+  margin: 0 5px;
+}
+label {
+  padding-right: 10px;
+}
+.search-select-box {
+  appearance: auto;
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
 }
 </style>

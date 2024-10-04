@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>메인</h1>
+  <div class="main-home">
+    <h1><i class="fa-solid fa-house"></i></h1>
   </div>
 </template>
 
@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style scoped>
-
+.main-home {
+  margin-top: 20px;
+  text-align: center;
+}
 </style>

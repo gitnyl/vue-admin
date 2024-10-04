@@ -1,8 +1,7 @@
 <template>
   <div class="sidebar">
     <div class="menu" v-for="(menu, index) in menus" :key="index">
-
-      <div class="menu-title" @click="menu.expanded = !menu.expanded">
+      <div class="menu-title" @click="toggleMenu(menu)">
         <span class="menu-icon" :class="menu.icon ?? menu.icon"></span>
         <span>{{ menu.title }}</span>
         <span class="arrow" :class="menu.expanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></span>
@@ -18,48 +17,30 @@
           {{ subMenu.title }}
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import menus from "@/assets/data/menu.json";
+
 export default {
   name: "SidebarSection",
   data() {
     return {
       value: true,
-      menus: [
-        {
-          title: '게시판',
-          icon: 'fas fa-calendar-alt',
-          expanded: true,
-          subMenus: [
-            { title: '공지사항', route: { name: 'noticeList' } },
-            { title: 'Q&A', route: { name: 'qnaList' } }
-          ]
-        },
-        {
-          title: '메시지',
-          icon: 'fas fa-envelope',
-          expanded: false,
-          subMenus: []
-        },
-        {
-          title: '캠페인',
-          icon: 'fas fa-vector-square',
-          expanded: false,
-          subMenus: [] // 하위 메뉴가 없는 경우
-        },
-      ]
+      menus: menus
     };
   },
   methods: {
-    navigateTo (subMenu) {
-      console.log(`Navigating to:: ${subMenu.route.name} / pageTitle:: ${subMenu.title}`);
+    navigateTo (subMenu) {1
+      // console.log(`Navigating to:: ${subMenu.route.name} / pageTitle:: ${subMenu.title}`);
       this.$emit('update-title', subMenu.title);
       this.$router.push(subMenu.route);
     },
+    toggleMenu (menu) {
+      menu.expanded = !menu.expanded;
+    }
   },
 }
 </script>
